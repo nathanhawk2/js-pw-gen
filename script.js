@@ -5,17 +5,22 @@ function generatePassword() {
   // password parameters
   var lower = 'abcdefghijklmnopqrstuvwxyz';
   var possible = '';
-  var upper = lower.toUpperCase;
+  var upper = lower.toUpperCase();
+  var numbers = '0123456789'
   var numbers = '0123456789';
   var special = '"#$%&\'()*+,-./:;<=>?@[\]^_`{|}~';
   var password = '';
+  var randomPassword = '';
+
 
 // character length prompt
   var charLength = prompt ('Choose a length between 8-128 characters');
   if (charLength > 129 || charLength < 8 || typeof charLength !== 'number') {
     window.alert('Please input a numeric value between 8-128')
-    var charLength = prompt ('Choose a length between 8-128 characters')
-  };
+    charLength = prompt ('Choose a length between 8-128 characters')
+  } else {
+    return;
+  }
 
   // pw parameter prompts
   var hasLower = confirm('Do you want to include lowercase letters?');
@@ -33,19 +38,29 @@ if (!hasSpecial && !hasUpper && !hasLower && !hasNumbers) {
     possible += lower;
   }
 
-  // password generator
-  for (var i = 0; i < characters; i++) {
-    // find random letter from possible
-    // append to the password string
+  if (hasUpper) {
+    possible += upper;
   }
 
+  if (hasSpecial) {
+    possible += special;
+  }
 
+  if (hasNumbers) {
+    possible += numbers;
+  }
 
-  return '';
+  // password generator
+  for (var i = 0; i < charLength; i++) {
+    var random = Math.floor(Math.random() * possible.length);
+    randomPassword = randomPassword + possible.charAt(random);
+  }
+
+  return randomPassword;
 }
 
 
-// Write password to the #password input
+
 function writePassword() {
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
