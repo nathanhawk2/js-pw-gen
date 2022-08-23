@@ -1,6 +1,28 @@
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
 
+function get_char_length() {
+  var return_val = prompt('Choose a length between 8-128 characters');
+  if (return_val > 128 || return_val < 8 || isNaN(return_val)) {
+    window.alert('Please input a numeric value between 8-128');
+    return_val = get_char_length();
+  }
+  return return_val;
+}
+
+function get_params() {
+  var hasLower = confirm('Do you want to include lowercase letters?');
+  var hasUpper = confirm('Do you want to include uppercase letters?');
+  var hasSpecial = confirm('Do you want to include special characters?');
+  var hasNumbers = confirm('Do you want to include numbers?');
+
+  if (!hasSpecial && !hasUpper && !hasLower && !hasNumbers) {
+    window.alert('You must pick at least one parameter')
+    return get_params();
+  };
+  return [hasLower, hasUpper, hasSpecial, hasNumbers];
+}
+
 function generatePassword() {
   // password parameters
   var lower = 'abcdefghijklmnopqrstuvwxyz';
@@ -13,40 +35,26 @@ function generatePassword() {
   var randomPassword = '';
 
 
-// character length prompt
-  var charLength = prompt ('Choose a length between 8-128 characters');
-  if (charLength > 129 || charLength < 8 || typeof charLength !== 'number') {
-    window.alert('Please input a numeric value between 8-128')
-    charLength = prompt ('Choose a length between 8-128 characters')
-  } else {
-    return;
-  }
+  // character length prompt
+  var charLength = get_char_length()
 
   // pw parameter prompts
-  var hasLower = confirm('Do you want to include lowercase letters?');
-  var hasUpper = confirm('Do you want to include uppercase letters?');
-  var hasSpecial = confirm('Do you want to include special characters?');
-  var hasNumbers = confirm('Do you want to include numbers?');
+  var params = get_params()
 
-if (!hasSpecial && !hasUpper && !hasLower && !hasNumbers) {
-  window.alert ('You must pick at least one parameter')
-  return;
-};
-
-// string building 
-  if (hasLower) {
+  // string building 
+  if (params[0]) {
     possible += lower;
   }
 
-  if (hasUpper) {
+  if (params[1]) {
     possible += upper;
   }
 
-  if (hasSpecial) {
+  if (params[2]) {
     possible += special;
   }
 
-  if (hasNumbers) {
+  if (params[3]) {
     possible += numbers;
   }
 
@@ -66,7 +74,7 @@ function writePassword() {
   var passwordText = document.querySelector("#password");
 
   passwordText.value = password;
-  return'';
+  return '';
 }
 
 // Add event listener to generate button
