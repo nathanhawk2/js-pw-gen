@@ -1,6 +1,7 @@
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
 
+// char length function
 function get_char_length() {
   var return_val = prompt('Choose a length between 8-128 characters');
   if (return_val > 128 || return_val < 8 || isNaN(return_val)) {
@@ -10,6 +11,7 @@ function get_char_length() {
   return return_val;
 }
 
+// function for parameters
 function get_params() {
   var hasLower = confirm('Do you want to include lowercase letters?');
   var hasUpper = confirm('Do you want to include uppercase letters?');
